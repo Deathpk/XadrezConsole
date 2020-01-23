@@ -13,7 +13,7 @@ namespace Xadrez
         {
             Tabuleiro tab = new Tabuleiro(8, 8);
 
-            Console.WriteLine();
+            Console.WriteLine( );
         }
     }
 }
