@@ -48,7 +48,7 @@ namespace tabuleiro
             return false; // testar depois com um else dentro do for.
         }
 
-        public bool podeMoverPara(Posicao pos)
+        public bool movimentoPossivel(Posicao pos)
         {
             return movimentosPossiveis()[pos.linha, pos.coluna];
         }
