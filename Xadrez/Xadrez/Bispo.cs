@@ -31,8 +31,8 @@ namespace Xadrez
 
             Posicao pos = new Posicao(0, 0);
 
-            //acima
-            pos.definirValores(posicao.linha - 1, posicao.coluna);
+            //NO
+            pos.definirValores(posicao.linha - 1, posicao.coluna -1);
             while (tab.posicaoValida(pos) && podeMover(pos))
             {// Enquanto tiver casa livre ou peça adversária posso mover.
                 mat[pos.linha, pos.coluna] = true;
@@ -40,12 +40,12 @@ namespace Xadrez
                 {
                     break;
                 }
-                pos.linha = pos.linha - 1;
+                pos.definirValores(pos.linha -1 , pos.coluna -1);
             }
 
-            //abaixo
+            //SE
 
-            pos.definirValores(posicao.linha + 1, posicao.coluna);
+            pos.definirValores(posicao.linha +1, posicao.coluna +1);
             while (tab.posicaoValida(pos) && podeMover(pos))
             {// Enquanto tiver casa livre ou peça adversária posso mover.
                 mat[pos.linha, pos.coluna] = true;
@@ -53,11 +53,11 @@ namespace Xadrez
                 {
                     break;
                 }
-                pos.linha = pos.linha + 1;
+                pos.definirValores(pos.linha +1, pos.coluna +1);
             }
 
-            //direita
-            pos.definirValores(posicao.linha, posicao.coluna + 1);
+            //SO
+            pos.definirValores(posicao.linha +1, posicao.coluna - 1);
             while (tab.posicaoValida(pos) && podeMover(pos))
             {// Enquanto tiver casa livre ou peça adversária posso mover.
                 mat[pos.linha, pos.coluna] = true;
@@ -65,21 +65,8 @@ namespace Xadrez
                 {
                     break;
                 }
-                pos.coluna = pos.coluna + 1;
-            }
-
-            //esquerda
-            pos.definirValores(posicao.linha, posicao.coluna - 1);
-            while (tab.posicaoValida(pos) && podeMover(pos))
-            {// Enquanto tiver casa livre ou peça adversária posso mover.
-                mat[pos.linha, pos.coluna] = true;
-                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
-                {
-                    break;
-                }
-                //aqui é como se tivesse um else.
-                pos.coluna = pos.coluna - 1;
-            }
+                pos.definirValores(pos.linha + 1, pos.coluna - 1);
+            }           
 
             return mat;
         }

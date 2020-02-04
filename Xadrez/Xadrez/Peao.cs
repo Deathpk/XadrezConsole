@@ -18,10 +18,16 @@ namespace Xadrez
         {
             return "P";
         }
-        private bool podeMover(Posicao pos)
+        
+        private bool existeInimigo (Posicao pos)
         {
             Peca p = tab.peca(pos);
-            return p == null || p.cor != this.cor; // this.cor = se a cor for diferente da cor do player atual (peça adversária)
+            return p != null && p.cor != cor;
+        }
+
+        private bool livre (Posicao pos)
+        {
+            return tab.peca(pos) == null;
         }
 
         public override bool[,] movimentosPossiveis()
@@ -30,57 +36,54 @@ namespace Xadrez
 
             Posicao pos = new Posicao(0, 0);
 
-            //acima
-            pos.definirValores(posicao.linha - 1, posicao.coluna);
-            while (tab.posicaoValida(pos) && podeMover(pos))
-            {// Enquanto tiver casa livre ou peça adversária posso mover.
-                mat[pos.linha, pos.coluna] = true;
-                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
+            if (cor == Cor.Branca)
+            {
+                pos.definirValores(posicao.linha - 1, posicao.coluna);
+                if(tab.posicaoValida(pos)&& livre(pos))
                 {
-                    break;
+                    mat[pos.linha, pos.coluna] = true;
                 }
-                pos.linha = pos.linha - 1;
-            }
-
-            //abaixo
-
-            pos.definirValores(posicao.linha + 1, posicao.coluna);
-            while (tab.posicaoValida(pos) && podeMover(pos))
-            {// Enquanto tiver casa livre ou peça adversária posso mover.
-                mat[pos.linha, pos.coluna] = true;
-                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
+                pos.definirValores(posicao.linha - 2, posicao.coluna);
+                if(tab.posicaoValida(pos)&& livre(pos) && QteMovimentos == 0)
                 {
-                    break;
+                    mat[pos.linha, pos.coluna] = true;
                 }
-                pos.linha = pos.linha + 1;
-            }
-
-            //direita
-            pos.definirValores(posicao.linha, posicao.coluna + 1);
-            while (tab.posicaoValida(pos) && podeMover(pos))
-            {// Enquanto tiver casa livre ou peça adversária posso mover.
-                mat[pos.linha, pos.coluna] = true;
-                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
+                pos.definirValores(posicao.linha - 1, posicao.coluna - 1);
+                if(tab.posicaoValida(pos)&& existeInimigo(pos))
                 {
-                    break;
+                    mat[pos.linha, pos.coluna] = true;
                 }
-                pos.coluna = pos.coluna + 1;
-            }
-
-            //esquerda
-            pos.definirValores(posicao.linha, posicao.coluna - 1);
-            while (tab.posicaoValida(pos) && podeMover(pos))
-            {// Enquanto tiver casa livre ou peça adversária posso mover.
-                mat[pos.linha, pos.coluna] = true;
-                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
+                pos.definirValores(posicao.linha - 1, posicao.coluna + 1);
+                if(tab.posicaoValida(pos) && existeInimigo(pos))
                 {
-                    break;
+                    mat[pos.linha, pos.coluna] = true;
                 }
-                //aqui é como se tivesse um else.
-                pos.coluna = pos.coluna - 1;
             }
-
+            else
+            {
+                pos.definirValores(posicao.linha + 1, posicao.coluna);
+                if (tab.posicaoValida(pos) && livre(pos))
+                {
+                    mat[pos.linha, pos.coluna] = true;
+                }
+                pos.definirValores(posicao.linha + 2, posicao.coluna);
+                if (tab.posicaoValida(pos) && livre(pos) && QteMovimentos == 0)
+                {
+                    mat[pos.linha, pos.coluna] = true;
+                }
+                pos.definirValores(posicao.linha + 1, posicao.coluna - 1);
+                if (tab.posicaoValida(pos) && existeInimigo(pos))
+                {
+                    mat[pos.linha, pos.coluna] = true;
+                }
+                pos.definirValores(posicao.linha + 1, posicao.coluna + 1);
+                if (tab.posicaoValida(pos) && existeInimigo(pos))
+                {
+                    mat[pos.linha, pos.coluna] = true;
+                }
+            }
             return mat;
+            }            
         }
     }
-}
+

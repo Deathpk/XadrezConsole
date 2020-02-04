@@ -39,7 +39,7 @@ namespace Xadrez
                 {
                     break;
                 }
-                pos.linha = pos.linha - 1;
+               pos.definirValores(pos.linha -1 , pos.coluna);
             }
 
             //abaixo
@@ -52,7 +52,7 @@ namespace Xadrez
                 {
                     break;
                 }
-                pos.linha = pos.linha + 1;
+                pos.definirValores(pos.linha + 1, pos.coluna);
             }
 
             //direita
@@ -64,7 +64,7 @@ namespace Xadrez
                 {
                     break;
                 }
-                pos.coluna = pos.coluna + 1;
+                pos.definirValores(pos.linha, pos.coluna + 1);
             }
 
             //esquerda
@@ -77,7 +77,56 @@ namespace Xadrez
                     break;
                 }
                 //aqui é como se tivesse um else.
-                pos.coluna = pos.coluna - 1;
+                pos.definirValores(pos.linha, pos.coluna - 1);
+            }
+
+            //NO
+            pos.definirValores(posicao.linha - 1, posicao.coluna - 1);
+            while (tab.posicaoValida(pos) && podeMover(pos))
+            {// Enquanto tiver casa livre ou peça adversária posso mover.
+                mat[pos.linha, pos.coluna] = true;
+                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
+                {
+                    break;
+                }
+                pos.definirValores(pos.linha - 1, pos.coluna - 1);
+            }
+
+            //NE
+            pos.definirValores(posicao.linha - 1, posicao.coluna + 1);
+            while (tab.posicaoValida(pos) && podeMover(pos))
+            {// Enquanto tiver casa livre ou peça adversária posso mover.
+                mat[pos.linha, pos.coluna] = true;
+                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
+                {
+                    break;
+                }
+                pos.definirValores(pos.linha - 1, pos.coluna - +1);
+            }
+
+            //SE
+
+            pos.definirValores(posicao.linha + 1, posicao.coluna + 1);
+            while (tab.posicaoValida(pos) && podeMover(pos))
+            {// Enquanto tiver casa livre ou peça adversária posso mover.
+                mat[pos.linha, pos.coluna] = true;
+                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
+                {
+                    break;
+                }
+                pos.definirValores(pos.linha + 1, pos.coluna + 1);
+            }
+
+            //SO
+            pos.definirValores(posicao.linha + 1, posicao.coluna - 1);
+            while (tab.posicaoValida(pos) && podeMover(pos))
+            {// Enquanto tiver casa livre ou peça adversária posso mover.
+                mat[pos.linha, pos.coluna] = true;
+                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
+                {
+                    break;
+                }
+                pos.definirValores(pos.linha + 1, pos.coluna - 1);
             }
 
             return mat;
